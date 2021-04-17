@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/user/login">登录</router-link>
+        <router-link to="/user/list">列表</router-link>
+
+<!--        <h1>登录</h1>-->
+<!--        用户名：<input type="text" v-model="user_name"> <br>-->
+<!--        密码： <input type="password" v-model="user_pass"> <br>-->
+<!--        <button @click="login">登录</button>-->
+    </div>
+    <router-view></router-view>
+
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script src="./js/axios.min.js"></script>
+
+    <script>
+        const res_login = { template:`
+        <div>
+            <h1>登录</h1>
+            用户名：<input type="text" v-model="user_name"> <br>
+            密码： <input type="password" v-model="user_pass"> <br>
+            <button @click="login">登录</button>
+        </div>
+        `}
+        const routes = [
+            {path:'/user/login',component:res_login},
+            {path:'/user/list',component:res_login},
+        ]
+        const router = new VueRouter({
+            routes:routes //(缩写)相当于 routes:routes
+        })
+        new Vue({
+            el: "#app",
+            data: {
+              user_name: "",
+              user_pass: ""
+            },
+            router:router,
+            methods: {
+                //点击登录触发
+                login(){
+                    const user_name = this.user_name
+                    const user_pass = this.user_pass
+                    console.log(user_name,user_pass)
+                    //发送 post请求， 将 用户名和密码发送给后端登录接口
+                    axios.post("http://localhost:9000/user/login",{user_name:user_name,user_pass:user_pass}).then(function(res){
+                        console.log(res.data)
+                        if(res.data.error==1){
+                            alert(res.data.success)
+                        }else{
+                            alert(res.data.success)
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>
