@@ -6,13 +6,11 @@
 </head>
 <body>
     <div id="app">
-        <router-link to="/user/login">登录</router-link>
-        <router-link to="/user/list">列表</router-link>
-
-<!--        <h1>登录</h1>-->
-<!--        用户名：<input type="text" v-model="user_name"> <br>-->
-<!--        密码： <input type="password" v-model="user_pass"> <br>-->
-<!--        <button @click="login">登录</button>-->
+        <h1>登录</h1>
+        用户名：<input type="text" v-model="user_name"> <br>
+        密码： <input type="password" v-model="user_pass"> <br>
+        <button @click="login">登录</button>
+        <login ></login>
     </div>
     <router-view></router-view>
 
@@ -29,20 +27,16 @@
             <button @click="login">登录</button>
         </div>
         `}
-        const routes = [
-            {path:'/user/login',component:res_login},
-            {path:'/user/list',component:res_login},
-        ]
-        const router = new VueRouter({
-            routes:routes //(缩写)相当于 routes:routes
-        })
         new Vue({
             el: "#app",
             data: {
               user_name: "",
               user_pass: ""
             },
-            router:router,
+            component:{
+                "login":res_login,
+            },
+            // router:router,
             methods: {
                 //点击登录触发
                 login(){
